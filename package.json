@@ -1,0 +1,29 @@
+{
+  "name": "qr_code-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/qr_code1/qr_code-api.git"
+  },
+  "keywords": [
+    "qr code"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/qr_code1/qr_code-api/issues"
+  },
+  "homepage": "https://gitlab.com/qr_code1/qr_code-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
