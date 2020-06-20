@@ -25,7 +25,6 @@ const sessionSchema = new Schema({
     participantIds: {
         type: ObjectId,
         ref: 'Checkin_checkout',
-        required: true,
         index: true
     },
     roomId: {
