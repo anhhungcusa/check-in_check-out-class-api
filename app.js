@@ -27,6 +27,4 @@ app.use(errorHandler);
 
 app.get('/', (req, res) => res.send('Hello World test!'))
 
-app.use('/users', userRoute)
-
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
