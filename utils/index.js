@@ -1,17 +1,23 @@
-const jwt = require('jsonwebtoken');
-const {env} = require('../config/globals')
+const bcrypt = require("bcrypt");
 
-const getToken = (user)=>{
-    return jwt.sign({
-        _id: user._id,
-        username: user.username,
-        fullname: user.fullname,
-        roleId: user.roleId,
-    },env.JWT_SECRET_KEY,{
-        expiresIn: '12h'
-    })
-}
+const Exception = function Exception(message, statusCode) {
+  this.message = message;
+  this.statusCode = statusCode;
+};
+const hashPassword = (plainPassword) => {
+  return bcrypt.hash(plainPassword, 10);
+};
+/**
+ *
+ * @param {string} hashedPassword
+ * @param {string} plainPassword
+ */
+const verifyPassword = (hashedPassword, plainPassword) => {
+  return bcrypt.compare(plainPassword, hashedPassword);
+};
 
 module.exports = {
-    getToken
-}
+  Exception,
+  hashPassword,
+  verifyPassword
+};
