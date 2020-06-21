@@ -38,10 +38,10 @@ const sessionSchema = new Schema(
   { timestamps: true }
 );
 
-BandSchema.virtual("host", {
-  ref: "User", // The model to use
-  localField: "hostId", // Find people where `localField`
-  foreignField: "_id", // is equal to `foreignField`
-});
+// BandSchema.virtual("host", {
+//   ref: "User", // The model to use
+//   localField: "hostId", // Find people where `localField`
+//   foreignField: "_id", // is equal to `foreignField`
+// });
 
 module.exports = model("Session", sessionSchema);
