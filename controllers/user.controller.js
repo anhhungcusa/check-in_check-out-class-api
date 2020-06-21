@@ -1,6 +1,6 @@
 const User = require('../models/user.model')
 const { statusCodes } = require('../config/globals')
-const {getToken} = require('../utils/index')
+const { getToken } = require('../utils/index')
 const bcrypt = require('bcrypt');
 
 
@@ -33,5 +33,29 @@ module.exports.register = async (req, res) => {
             message: "Invalid User Data"
         })
     }
+}
 
+module.exports.login = async (req, res) => {
+    const user = await User.findOne({ username: req.body.username })
+    if (!user) {
+        return res.status(statusCodes.NOT_FOUND).json({
+            message: "User not Exist!"
+        })
+    } else {
+        bcrypt.compare(req.body.password, user.password, (err, result) => {
+            if (result) {
+                res.status(statusCodes.OK).json({
+                    _id: user._id,
+                    username: user.username,
+                    fullname: user.fullname,
+                    roleId: user.roleId,
+                    token: getToken(user)
+                })
+            } else {
+                res.status(401).json({
+                    message: "Auth failed"
+                })
+            }
+        })
+    }
 }
