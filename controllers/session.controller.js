@@ -25,6 +25,17 @@ const createSession = async (req, res, next) => {
     next(err);
   }
 };
+
+const getSessions = async (req, res, next) => {
+  try {
+    const sessions = await Session.find();
+    if (!sessions) throw new Exception("Don't have a user");
+    return res.status(statusCodes.OK).json({ sessions, message: "Get Sessions Success!" });
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = {
   createSession,
+  getSessions,
 };
