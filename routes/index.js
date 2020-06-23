@@ -13,5 +13,5 @@ module.exports = (router) => {
   router.use(`${prefix}/sessions`, authMiddleware.isAuthorized, session);
   router.use(`${prefix}/rooms`, authMiddleware.isAuthorized, room);
   router.use(`${prefix}/users`, authMiddleware.isAuthorized, user);
-  router.use(`${prefix}/auth`, authMiddleware.isAuthorized, auth);
+  router.use(`${prefix}/auth`, auth);
 };
