@@ -25,7 +25,7 @@ const getRooms = async (req, res, next) => {
   try {
     const rooms = await Room.find();
     if (!rooms) throw new Exception("Don't have a room");
-    return res.status(statusCodes.OK).json({ rooms });
+    return res.status(statusCodes.OK).json({ rooms, message: "Get Rooms Success!" });
   } catch (err) {
     next(err);
   }
