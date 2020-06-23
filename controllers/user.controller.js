@@ -7,7 +7,7 @@ module.exports.getAll = async (req, res, next) => {
   try {
     const users = await User.find();
     if (!users) throw new Exception("Don't have a user");
-    return res.status(statusCodes.OK).json({ users });
+    return res.status(statusCodes.OK).json({ users, message: "Get Users Success!" });
   } catch (err) {
     next(err);
   }
