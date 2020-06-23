@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 
 
 const initRestRoutes = require("./routes/index");
+const corsMiddleware = require('./middlewares/cors')
 
 // error handler middleware
 const errorHandler = require("./middlewares/error-handler");
@@ -22,6 +23,8 @@ const errorHandler = require("./middlewares/error-handler");
 // connect mongoose
 createConnection();
 // init routes
+app.use(corsMiddleware);
+
 initRestRoutes(app);
 app.use(errorHandler);
 
