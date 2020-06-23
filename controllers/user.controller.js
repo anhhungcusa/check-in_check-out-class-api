@@ -3,15 +3,20 @@ const { verifyPassword, Exception, hashPassword } = require("../utils/index");
 const { statusCodes } = require("../config/globals");
 const { generateAccessToken } = require("../utils/jwt");
 
-module.exports.getAll = async (req, res) => {
-  const users = await User.find();
-  res.status(200).json(users);
+module.exports.getAll = async (req, res, next) => {
+  try {
+    const users = await User.find();
+    if (!users) throw new Exception("Don't have a user");
+    return res.status(statusCodes.OK).json({ users });
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports.register = async (req, res, next) => {
   try {
     const { username, password, fullname, roleId } = req.body;
-    console.log(username, password, fullname, roleId)
+    console.log(username, password, fullname, roleId);
     // check exist username
     const isExistedUsername = await User.exists({ username });
     if (isExistedUsername) throw new Exception("Email existed");
@@ -31,6 +36,6 @@ module.exports.register = async (req, res, next) => {
       message: "Create User Role Student Success!",
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
