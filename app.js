@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 const {env} = require('./config/globals') 
 const { createConnection } = require("./db");
 
-const userRoute = require('./routes/user.route')
-
 const app = express()
 const port = env.PORT
 
@@ -23,7 +21,7 @@ const errorHandler = require("./middlewares/error-handler");
 // connect mongoose
 createConnection();
 // init routes
-app.use(corsMiddleware);
+// app.use(corsMiddleware);
 
 initRestRoutes(app);
 app.use(errorHandler);
