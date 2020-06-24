@@ -30,7 +30,22 @@ const getSessions = async (req, res, next) => {
   try {
     const sessions = await Session.find();
     if (!sessions) throw new Exception("Don't have a user");
-    return res.status(statusCodes.OK).json({ sessions, message: "Get Sessions Success!" });
+    return res
+      .status(statusCodes.OK)
+      .json({ sessions, message: "Get Sessions Success!" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getSessionById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const session = await Session.findById(id);
+    if (!session) throw new Exception("Not Found Session");
+    return res
+      .status(statusCodes.OK)
+      .send({ session, message: "Get Session Success" });
   } catch (err) {
     next(err);
   }
@@ -38,4 +53,5 @@ const getSessions = async (req, res, next) => {
 module.exports = {
   createSession,
   getSessions,
+  getSessionById,
 };
