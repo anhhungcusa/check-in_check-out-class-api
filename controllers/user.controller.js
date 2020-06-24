@@ -40,18 +40,29 @@ module.exports.register = async (req, res, next) => {
   }
 };
 
+module.exports.updateUser = async (req,res, next)=>{
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body)
+    if (!user) throw new Exception("User doesn't exist!")
+    res.status(statusCodes.OK).send({
+      message: "User Updated!"
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports.deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
-    if (user) {
+    if (!user) {throw new Exception("User doesn't exist!")}
+    else{
       await user.remove()
       res.status(statusCodes.OK).send({
         message: "Delete User Success"
       })
     }
   } catch (error) {
-    res.status(statusCodes.NOT_FOUND).send({
-      message: "User doesn't exist!"
-    })
+    next(error)
   }
 }
