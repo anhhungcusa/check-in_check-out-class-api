@@ -41,7 +41,9 @@ const getSessions = async (req, res, next) => {
 const getSessionById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const session = await Session.findById(id);
+    if(!id) throw new Exception('Id is required!')
+    const session = await Session.findById(id)
+    .populate('participantIds')
     if (!session) throw new Exception("Not Found Session");
     return res
       .status(statusCodes.OK)
@@ -50,6 +52,7 @@ const getSessionById = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = {
   createSession,
   getSessions,
