@@ -21,9 +21,9 @@ const errorHandler = require("./middlewares/error-handler");
 // connect mongoose
 createConnection();
 // init routes
-// app.use(corsMiddleware);
 
 initRestRoutes(app);
+app.use(corsMiddleware);
 app.use(errorHandler);
 
 app.get('/', (req, res) => res.send('Hello World test!'))

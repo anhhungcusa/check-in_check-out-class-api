@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const { String, Date, ObjectId } = Schema.Types;
+const checkin_checkout = require("../models/checkin_checkout.model");
 
 const sessionSchema = new Schema(
   {
@@ -23,11 +24,12 @@ const sessionSchema = new Schema(
       required: true,
       index: true,
     },
-    participantIds: {
-      type: ObjectId,
-      ref: "Checkin_checkout",
-      index: true,
-    },
+    participantIds: [
+      {
+        type: ObjectId,
+        ref: 'Checkin_checkout'
+      },
+    ],
     roomId: {
       type: ObjectId,
       ref: "Room",
@@ -39,7 +41,7 @@ const sessionSchema = new Schema(
 );
 
 const BandSchema = new Schema({
-  name: String
+  name: String,
 });
 
 BandSchema.virtual("host", {
