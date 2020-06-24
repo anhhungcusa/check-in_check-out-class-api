@@ -39,3 +39,19 @@ module.exports.register = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (user) {
+      await user.remove()
+      res.status(statusCodes.OK).send({
+        message: "Delete User Success"
+      })
+    }
+  } catch (error) {
+    res.status(statusCodes.NOT_FOUND).send({
+      message: "User doesn't exist!"
+    })
+  }
+}
