@@ -9,6 +9,7 @@ const permissionSchema = new Schema(
       unique: true,
       maxlength: 30,
       minlength: 3,
+      lowercase: true
     },
   },
   { timestamps: true }

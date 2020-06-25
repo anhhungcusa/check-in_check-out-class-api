@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
-const { verifyPassword, Exception, hashPassword } = require("../utils/index");
+const { Exception } = require("../utils/index");
 const { statusCodes } = require("../config/globals");
-const { generateAccessToken } = require("../utils/jwt");
+const Role = require('../models/role.model')
 
 module.exports.getAll = async (req, res, next) => {
   try {
@@ -15,30 +15,22 @@ module.exports.getAll = async (req, res, next) => {
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { username, password, fullname, roleId } = req.body;
-    console.log(username, password, fullname, roleId);
-    // check exist username
-    const isExistedUsername = await User.exists({ username });
-    if (isExistedUsername) throw new Exception("Email existed");
-
-    const hassPassword = await hashPassword(password);
-    const user = new User({
-      username,
-      password: hassPassword,
-      fullname,
-      roleId,
-    });
+		let { username, fullname, password, roleId } = req.body;
+		const isExistedUsername  = await User.exists({ username })
+		if (isExistedUsername) throw new Exception('username is existed');
+    if(!roleId) {
+      const studentRole = await Role.findOne({name: 'student'})
+      if(!studentRole) throw new Exception('student role not found')
+      roleId = studentRole._id
+    }
+		const user = new User({ username, fullname, password, roleId });
     await user.save();
-    delete user._doc.password;
-
-    return res.status(statusCodes.OK).send({
-      user,
-      message: "Create User Role Student Success!",
-    });
-  } catch (error) {
-    next(error);
-  }
+		return res.status(statusCodes.OK).send({message: 'register account successful'});
+	} catch (error) {
+		next(error);
+	}
 };
+
 
 module.exports.updateUser = async (req,res, next)=>{
   try {

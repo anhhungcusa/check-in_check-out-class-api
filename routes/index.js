@@ -1,5 +1,5 @@
 //routes
-const session = require("./sesion.route");
+const session = require("./session.route");
 const room = require("./room.route");
 const user = require("./user.route");
 const auth = require("./auth.route");

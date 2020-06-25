@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 const { verifyPassword, Exception } = require("../utils/index");
-const { statusCodes } = require("../config/globals");
+const { statusCodes, env } = require("../config/globals");
 const { generateAccessToken } = require("../utils/jwt");
 
 module.exports.login = async (req, res, next) => {
@@ -18,7 +18,7 @@ module.exports.login = async (req, res, next) => {
         username: user.username,
         fullname: user.fullname,
       },
-      process.env.JWT_SECRET_KEY,"7d");
+      env.JWT_SECRET_KEY,"7d");
     return res.status(statusCodes.OK).send({ user, token });
   } catch (err) {
     next(err);
