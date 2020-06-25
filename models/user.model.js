@@ -1,6 +1,6 @@
 const {Schema, model} = require("mongoose");
-const { String, Date, Boolean } = Schema.Types
-
+const { String, ObjectId } = Schema.Types
+const {hashPassword} = require('../utils/index')
 const userSchema = new Schema({
     username: {
         type: String,
@@ -21,9 +21,17 @@ const userSchema = new Schema({
         minlength: 6
     },
     roleId: {
-        type: String,
+        type: ObjectId,
         required: true
     }
 }, { timestamps: true })
+
+userSchema.pre('save',async function (next) {
+    if (this.isModified('password')) {
+        this.password = await hashPassword(this.password)
+    }
+    next()
+  })
+
 
 module.exports = model("User", userSchema)

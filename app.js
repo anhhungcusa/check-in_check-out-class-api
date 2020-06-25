@@ -22,8 +22,8 @@ const errorHandler = require("./middlewares/error-handler");
 createConnection();
 // init routes
 
-initRestRoutes(app);
 app.use(corsMiddleware);
+initRestRoutes(app);
 app.use(errorHandler);
 
 app.get('/', (req, res) => res.send('Hello World test!'))

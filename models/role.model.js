@@ -7,13 +7,13 @@ const roleSchema = new Schema({
         required: true,
         unique: true,
         maxlength: 30,
-        minlength: 3
+        minlength: 3,
+        lowercase: true
     },
     permissionIds: {
-        type: ObjectId,
-        ref: 'Permission',
+        type: [ObjectId],
         required: true,
-        index: true
+        default: []
     }
 }, { timestamps: true })
 
