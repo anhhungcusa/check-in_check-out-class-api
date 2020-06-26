@@ -7,4 +7,6 @@ router.get("", controller.getSessions);
 
 router.get("/:id", controller.getSessionById);
 
+router.delete("/:id", controller.deleteSessionById);
+
 module.exports = router;
