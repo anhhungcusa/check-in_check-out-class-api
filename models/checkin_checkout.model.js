@@ -7,13 +7,13 @@ const checkin_checkoutSchema = new Schema(
       type: ObjectId,
       ref: "User",
       required: true,
-      index: true,
+      index: true
     },
     sessionId: {
       type: ObjectId,
       ref: "Session",
       required: true,
-      index: true,
+      index: true
     },
     checkinAt: {
       type: Date,
@@ -21,10 +21,11 @@ const checkin_checkoutSchema = new Schema(
     },
     checkoutAt: {
       type: Date,
-      required: true,
     }
   },
   { timestamps: true }
 );
+
+checkin_checkoutSchema.index({userId: 1, sessionId: 1}, {unique: true})
 
 module.exports = model("Checkin_checkout", checkin_checkoutSchema);

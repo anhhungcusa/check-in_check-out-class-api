@@ -2,6 +2,7 @@ const { Exception } = require("../utils");
 const { verifyToken } = require("../utils/jwt");
 const { statusCodes } = require("../config/globals");
 const {env} = require('../config/globals')
+const User = require('../models/user.model')
 
 const isAuthorized = async (req, res, next) => {
   let token = req.get("authorization");
@@ -18,7 +19,23 @@ const isAuthorized = async (req, res, next) => {
   }
 };
 
+const requireRole = (roles = []) => async (req, res, next) => {
+  try {
+    if(roles.length === 0) next()
+    if(!req.auth) throw new Exception('request is unauthorized', statusCodes.UNAUTHORIZED)
+    const user = await User.findById(req.auth._id).populate('role')
+    const role = user && user.role
+    const canAccess = role && roles.includes(role)
+    if(!canAccess) throw new Exception('request is forbidden', statusCodes.FORBIDDEN)
+    req.role= role
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 module.exports = {
-  isAuthorized
+  isAuthorized,
+  requireRole
 }

@@ -39,15 +39,10 @@ const sessionSchema = new Schema(
   },
   { timestamps: true }
 );
-
-const BandSchema = new Schema({
-  name: String,
-});
-
-BandSchema.virtual("host", {
-  ref: "User", // The model to use
-  localField: "hostId", // Find people where `localField`
-  foreignField: "_id", // is equal to `foreignField`
-});
-
+sessionSchema.virtual('room', {
+  ref: 'Room',
+  localField: 'roomId',
+  foreignField: '_id',
+  justOne: true
+})
 module.exports = model("Session", sessionSchema);
