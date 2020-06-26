@@ -26,6 +26,13 @@ const userSchema = new Schema({
     }
 }, { timestamps: true })
 
+userSchema.virtual('role', {
+    ref: 'Role',
+    localField: 'roleId',
+    foreignField: '_id',
+    justOne: true
+})
+
 userSchema.pre('save',async function (next) {
     if (this.isModified('password')) {
         this.password = await hashPassword(this.password)
