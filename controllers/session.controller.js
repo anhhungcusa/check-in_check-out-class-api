@@ -65,9 +65,30 @@ const deleteSessionById = async (req, res, next) => {
     next(err);
   }
 };
+
+const editSessionById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { startAt, endAt, name, roomId } = req.body;
+    if (!id) throw new Exception("Id is requireed!");
+    const session = await Session.findByIdAndUpdate(
+      id,
+      { startAt, endAt, name, roomId },
+      { new: true }
+    );
+    if (!session) throw new Exception(`Not Found Session - ${id}`);
+    return res
+      .status(statusCodes.OK)
+      .send({ session, message: `Edit Session-${id} Success!` });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createSession,
   getSessions,
   getSessionById,
   deleteSessionById,
+  editSessionById,
 };
