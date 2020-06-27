@@ -17,12 +17,14 @@ const corsMiddleware = require('./middlewares/cors')
 
 // error handler middleware
 const errorHandler = require("./middlewares/error-handler");
+const delay = require("./middlewares/delay");
 
 // connect mongoose
 createConnection();
 // init routes
 
 app.use(corsMiddleware);
+// app.use(delay(10000));
 initRestRoutes(app);
 app.use(errorHandler);
 
