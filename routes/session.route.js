@@ -9,4 +9,6 @@ router.get("/:id", controller.getSessionById);
 
 router.delete("/:id", controller.deleteSessionById);
 
+router.post("/:id", controller.editSessionById);
+
 module.exports = router;

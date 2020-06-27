@@ -1,6 +1,6 @@
 const cors = require("cors");
 const {env} = require('../config/globals')
-let whitelist = []
+let whitelist = ['http://localhost:3300', 'http://localhost:3000']
 if(env.NODE_ENV === 'development') {
     whitelist.push('http://localhost:3000')
 }

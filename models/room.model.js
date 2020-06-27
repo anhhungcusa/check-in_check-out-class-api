@@ -14,4 +14,4 @@ const roomSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("Permission", roomSchema);
+module.exports = model("Room", roomSchema);
