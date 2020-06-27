@@ -2,11 +2,16 @@ const User = require("../models/user.model");
 const { Exception } = require("../utils/index");
 const { statusCodes } = require("../config/globals");
 const Role = require('../models/role.model')
+const {Types: {ObjectId}} = require('mongoose')
 
 module.exports.getAll = async (req, res, next) => {
   try {
-    const users = await User.find();
-    if (!users) throw new Exception("Don't have a user");
+    let users = await User.find().populate('role');
+    users = users.map(user => {
+      delete user._doc.password;
+      return ({ ...user._doc, role: user.role })
+    })
+    if (users.length === 0) throw new Exception("users not found");
     return res.status(statusCodes.OK).json({ users, message: "Get Users Success!" });
   } catch (err) {
     next(err);
@@ -15,24 +20,22 @@ module.exports.getAll = async (req, res, next) => {
 
 module.exports.register = async (req, res, next) => {
   try {
-		let { username, fullname, password, roleId } = req.body;
-		const isExistedUsername  = await User.exists({ username })
-		if (isExistedUsername) throw new Exception('username is existed');
-    if(!roleId) {
-      const studentRole = await Role.findOne({name: 'student'})
-      if(!studentRole) throw new Exception('student role not found')
-      roleId = studentRole._id
-    }
-		const user = new User({ username, fullname, password, roleId });
+    let { username, fullname, password, role: roleName = 'student' } = req.body;
+    const isExistedUsername = await User.exists({ username })
+    if (isExistedUsername) throw new Exception('username is existed');
+    const role = await Role.findOne({ name: roleName })
+    if (!role) throw new Exception(`${roleName} role not found`)
+    const roleId = role._id
+    const user = new User({ username, fullname, password, roleId });
     await user.save();
-		return res.status(statusCodes.OK).send({message: 'register account successful'});
-	} catch (error) {
-		next(error);
-	}
+    return res.status(statusCodes.OK).send({ message: 'register account successful' });
+  } catch (error) {
+    next(error);
+  }
 };
 
 
-module.exports.updateUser = async (req,res, next)=>{
+module.exports.updateUser = async (req, res, next) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body)
     if (!user) throw new Exception("User doesn't exist!")
@@ -46,9 +49,11 @@ module.exports.updateUser = async (req,res, next)=>{
 
 module.exports.deleteUser = async (req, res, next) => {
   try {
+    const {id} = req.params
+    if(!ObjectId.isValid(id)) throw new Exception('user id is not valid')
     const user = await User.findById(req.params.id)
-    if (!user) {throw new Exception("User doesn't exist!")}
-    else{
+    if (!user) { throw new Exception("User doesn't exist!") }
+    else {
       await user.remove()
       res.status(statusCodes.OK).send({
         message: "Delete User Success"
@@ -58,3 +63,5 @@ module.exports.deleteUser = async (req, res, next) => {
     next(error)
   }
 }
+
+
