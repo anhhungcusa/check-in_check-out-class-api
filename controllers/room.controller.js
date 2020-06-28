@@ -30,7 +30,23 @@ const getRooms = async (req, res, next) => {
     next(err);
   }
 };
+
+const deleteRoomById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!id) throw new Exception("Id is required!");
+    const result = await Room.findByIdAndDelete(id);
+    if (!result) throw new Exception("Room Don't Exist!");
+    return res
+      .status(statusCodes.OK)
+      .send({ message: `Delete Room - ${id} Success!` });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createRoom,
-  getRooms
+  getRooms,
+  deleteRoomById
 };
