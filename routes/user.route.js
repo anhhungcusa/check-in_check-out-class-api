@@ -5,7 +5,7 @@ router.get('', userController.getAll)
 
 router.post('', userController.register) 
 
-router.put('/:id', userController.updateUser)
+router.patch('/:id', userController.updateUser)
 
 router.delete('/:id', userController.deleteUser)
 
