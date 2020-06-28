@@ -45,8 +45,28 @@ const deleteRoomById = async (req, res, next) => {
   }
 };
 
+const editRoomById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    if (!id) throw new Exception("Id is requireed!");
+    const room = await Room.findByIdAndUpdate(
+      id,
+      { name },
+      { new: true }
+    );
+    if (!room) throw new Exception(`Not Found Room - ${id}`);
+    return res
+      .status(statusCodes.OK)
+      .send({ room, message: `Edit Room-${id} Success!` });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createRoom,
   getRooms,
-  deleteRoomById
+  deleteRoomById,
+  editRoomById
 };
