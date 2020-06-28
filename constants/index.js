@@ -7,5 +7,8 @@ const roles = {
 const permissions = {
 
 }
+const socketConnections = {
+    qrSession: 'qr session'
+}
 
-export {roles, permissions}
+module.exports =  {roles, permissions, socketConnections}

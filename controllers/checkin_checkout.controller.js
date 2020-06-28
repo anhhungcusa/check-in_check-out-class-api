@@ -4,9 +4,11 @@ const { statusCodes } = require('../config/globals')
 const { Exception } = require('../utils')
 const CheckInCheckOut = require('../models/checkin_checkout.model')
 const Session = require('../models/session.model')
+const {socketConnections} = require('../constants/index')
+
 const checking = async (req, res, next) => {
     try {
-        const { auth: { _id: userId }, body } = req
+        const { auth: { _id: userId }, body, io, ip } = req
         const { codeId, sessionId } = body
         const _id = ObjectId(codeId)
         let message
@@ -40,6 +42,9 @@ const checking = async (req, res, next) => {
         } else {
             const qrSession = new QRSession({ _id, sessionId, userId })
             qrSession.save()
+        }
+        if(io) {
+            io.emit(socketConnections.qrSession, sessionId)
         }
         const roomName = session.room ? session.room.name : 'not found'
         res.status(statusCodes.OK).send({ message, session: { name: session.name, room: session.room && roomName } })
