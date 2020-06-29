@@ -58,8 +58,9 @@ const getCheckin_checkouts = async (req, res, next) => {
     try {
         const { id } = req.params;
         if(!id) throw new Exception("Id is require!") 
-        const checks = await CheckInCheckOut.find({ sessionId: id })
-        if(!checks) throw new Exception("Not found!")
+        const checkins = await CheckInCheckOut.find({ sessionId: id })
+        console.log('checks', checkins)
+        if(!checkins) throw new Exception("Not found!")
         return res.status(statusCodes.OK).send({ checkins, message : "Get Checkin_checkouts Success!" })
     } catch(error){
         next(error)
