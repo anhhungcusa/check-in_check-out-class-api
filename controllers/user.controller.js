@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
-const { Exception, hashPassword } = require("../utils/index");
-const { statusCodes } = require("../config/globals");
+const { Exception } = require("../utils/index");
+const { generateAccessToken } = require("../utils/jwt");
+const { statusCodes, env } = require("../config/globals");
 const Role = require("../models/role.model");
 const {
   Types: { ObjectId },
@@ -105,20 +106,33 @@ module.exports.changePassword = async (req, res, next) => {
   try {
     const { password } = req.body;
     const { id } = req.params;
-    const user = await User.findById(
-      id,
-      {
-        createdAt: 0,
-        updatedAt: 0,
-        __v: 0,
-      }
-    );
+    const user = await User.findById(id, {
+      createdAt: 0,
+      updatedAt: 0,
+      __v: 0,
+    });
     user.password = password;
     user.save();
     if (!user) throw new Exception("User doesn't exist!");
     return res.status(statusCodes.OK).send({
       message: "Change Password Success!",
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.requireAcceptToekn = async (req, res, next) => {
+  try {
+    const { _id, username, fullname, role } = req.body;
+    const token = await generateAccessToken(
+      { _id, username, fullname, role },
+      env.JWT_SECRET_KEY,
+      "2d"
+    );
+    return res
+      .status(statusCodes.OK)
+      .send({ token, message: "Required Success!" });
   } catch (error) {
     next(error);
   }
