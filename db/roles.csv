@@ -1,0 +1,4 @@
+_id,name,permissionIds
+ObjectId("5ef4e0403c636d073cc6f336"),student,"[]"
+ObjectId("5ef5956298cc9407e012b5a6"),teacher,"[]"
+ObjectId("5ef5958698cc9407e012b5a7"),admin,"[]"
