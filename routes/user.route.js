@@ -11,4 +11,6 @@ router.delete('/:id', userController.deleteUser)
 
 router.get('/:id', userController.getUserById)
 
+router.put('/:id', userController.changePassword)
+
 module.exports = router
