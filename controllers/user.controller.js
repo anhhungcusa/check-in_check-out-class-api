@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const { Exception } = require("../utils/index");
+const { Exception, hashPassword } = require("../utils/index");
 const { statusCodes } = require("../config/globals");
 const Role = require("../models/role.model");
 const {
@@ -30,7 +30,12 @@ module.exports.register = async (req, res, next) => {
     const role = await Role.findOne({ name: roleName });
     if (!role) throw new Exception(`${roleName} role not found`);
     const roleId = role._id;
-    const user = new User({ username, fullname, password, roleId });
+    const user = new User({
+      username,
+      fullname,
+      password,
+      roleId,
+    });
     await user.save();
     return res
       .status(statusCodes.OK)
@@ -93,5 +98,28 @@ module.exports.getUserById = async (req, res, next) => {
       .send({ user, message: "Get User Success!" });
   } catch (err) {
     next(err);
+  }
+};
+
+module.exports.changePassword = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+    const { id } = req.params;
+    const user = await User.findById(
+      id,
+      {
+        createdAt: 0,
+        updatedAt: 0,
+        __v: 0,
+      }
+    );
+    user.password = password;
+    user.save();
+    if (!user) throw new Exception("User doesn't exist!");
+    return res.status(statusCodes.OK).send({
+      message: "Change Password Success!",
+    });
+  } catch (error) {
+    next(error);
   }
 };
