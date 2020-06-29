@@ -54,7 +54,19 @@ const checking = async (req, res, next) => {
 
 }
 
+const getCheckin_checkouts = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if(!id) throw new Exception("Id is require!") 
+        const checks = await CheckInCheckOut.find({ sessionId: id })
+        if(!checks) throw new Exception("Not found!")
+        return res.status(statusCodes.OK).send({ checkins, message : "Get Checkin_checkouts Success!" })
+    } catch(error){
+        next(error)
+    }
+}
 
 module.exports = {
-    checking
+    checking,
+    getCheckin_checkouts
 }
