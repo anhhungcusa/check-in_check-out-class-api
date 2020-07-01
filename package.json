@@ -1,25 +1,24 @@
 {
-  "name": "qr_code-api",
+  "name": "check-in_check-out-class-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/qr_code1/qr_code-api.git"
+    "url": "git+https://github.com/anhhungcusa/check-in_check-out-class-api.git"
   },
   "keywords": [
-    "qr code"
   ],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/qr_code1/qr_code-api/issues"
+    "url": "https://github.com/anhhungcusa/check-in_check-out-class-api/issues"
   },
-  "homepage": "https://gitlab.com/qr_code1/qr_code-api#readme",
+  "homepage": "https://github.com/anhhungcusa/check-in_check-out-class-api#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
