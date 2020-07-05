@@ -3,6 +3,6 @@ const controller = require('../controllers/checkin_checkout.controller')
 
 router.post('/', controller.checking)
 
-router.get('/:id', controller.getCheckin_checkouts)
+router.get('/:id', controller.getCheckinCheckouts)
 
 module.exports = router

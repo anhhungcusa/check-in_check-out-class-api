@@ -1,6 +1,5 @@
-const { Schema, model } = require("mongoose");
-const { String, Date, ObjectId } = Schema.Types;
-const checkin_checkout = require("../models/checkin_checkout.model");
+const { Schema, model } = require('mongoose')
+const { String, Date, ObjectId } = Schema.Types
 
 const sessionSchema = new Schema(
   {
@@ -20,29 +19,29 @@ const sessionSchema = new Schema(
     },
     hostId: {
       type: ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true,
     },
     participantIds: [
       {
         type: ObjectId,
-        ref: 'Checkin_checkout'
+        ref: 'CheckinCheckout'
       },
     ],
     roomId: {
       type: ObjectId,
-      ref: "Room",
+      ref: 'Room',
       required: true,
       index: true,
     },
   },
   { timestamps: true }
-);
+)
 sessionSchema.virtual('room', {
   ref: 'Room',
   localField: 'roomId',
   foreignField: '_id',
   justOne: true
 })
-module.exports = model("Session", sessionSchema);
+module.exports = model('Session', sessionSchema)

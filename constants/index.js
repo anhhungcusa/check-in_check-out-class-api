@@ -1,14 +1,14 @@
 const roles = {
-    admin: 'admin',
-    student: 'student',
-    teacher: 'teacher'
+  admin: 'admin',
+  student: 'student',
+  teacher: 'teacher',
 }
 
-const permissions = {
-
-}
+const permissions = {}
 const socketConnections = {
-    qrSession: 'qr session'
+  qrSession: 'qr session',
 }
 
-module.exports =  {roles, permissions, socketConnections}
+module.exports = { roles,
+  permissions,
+  socketConnections }
