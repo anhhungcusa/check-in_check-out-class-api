@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 const {env} = require('../config/globals')
 const createConnection = () =>
   mongoose
@@ -9,12 +9,11 @@ const createConnection = () =>
       useCreateIndex: true
     })
     .then(res => {
-      console.log("mongodb connected");
-      return res;
+      return res
     })
     .catch(err => {
-      console.log("mongodb connect failed", err);
-      return err;
-    });
+      console.error('mongodb connect failed', err)
+      return err
+    })
 
-module.exports = { createConnection };
+module.exports = { createConnection }

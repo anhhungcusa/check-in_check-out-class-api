@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const { String } = Schema.Types;
+const { Schema, model } = require('mongoose')
+const { String } = Schema.Types
 
 const roomSchema = new Schema(
   {
@@ -12,6 +12,6 @@ const roomSchema = new Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-module.exports = model("Room", roomSchema);
+module.exports = model('Room', roomSchema)

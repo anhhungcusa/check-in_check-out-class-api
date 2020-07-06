@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose");
-const { String } = Schema.Types;
+const { Schema, model } = require('mongoose')
+const { String } = Schema.Types
 
 const permissionSchema = new Schema(
   {
@@ -13,6 +13,6 @@ const permissionSchema = new Schema(
     },
   },
   { timestamps: true }
-);
+)
 
-module.exports = model("Permission", permissionSchema);
+module.exports = model('Permission', permissionSchema)

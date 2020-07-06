@@ -11,8 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/anhhungcusa/check-in_check-out-class-api.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -30,6 +29,9 @@
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "nodemon": "^2.0.4",
+    "prettier": "2.0.5"
   }
 }

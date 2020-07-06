@@ -1,17 +1,17 @@
-const { Schema, model } = require("mongoose");
-const {  ObjectId, Date } = Schema.Types;
+const { Schema, model } = require('mongoose')
+const {  ObjectId, Date } = Schema.Types
 
-const checkin_checkoutSchema = new Schema(
+const checkinCheckoutSchema = new Schema(
   {
     userId: {
       type: ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       index: true
     },
     sessionId: {
       type: ObjectId,
-      ref: "Session",
+      ref: 'Session',
       required: true,
       index: true
     },
@@ -24,8 +24,9 @@ const checkin_checkoutSchema = new Schema(
     }
   },
   { timestamps: true }
-);
+)
 
-checkin_checkoutSchema.index({userId: 1, sessionId: 1}, {unique: true})
+checkinCheckoutSchema.index({userId: 1,
+  sessionId: 1}, {unique: true})
 
-module.exports = model("Checkin_checkout", checkin_checkoutSchema);
+module.exports = model('CheckinCheckout', checkinCheckoutSchema)

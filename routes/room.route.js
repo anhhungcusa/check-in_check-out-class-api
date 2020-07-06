@@ -7,6 +7,6 @@ router.get('', controller.getRooms)
 
 router.delete('/:id', controller.deleteRoomById)
 
-router.patch("/:id", controller.editRoomById);
+router.patch('/:id', controller.editRoomById)
 
 module.exports = router

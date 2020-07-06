@@ -2,12 +2,12 @@ const {Schema, model} = require('mongoose')
 const {ObjectId} = Schema.Types
 
 const qrSessionSchema = new Schema({
-    userId: {
-        type: ObjectId,
-        required: true,
-        index:true,
-        unique: true
-    }
+  userId: {
+    type: ObjectId,
+    required: true,
+    index: true,
+    unique: true
+  }
 })
 
 
